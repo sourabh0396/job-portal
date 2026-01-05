@@ -48,7 +48,7 @@ export const isUserAuth = async (req: AuthenticatedRequest, res: Response, next:
         // GROUP BY u.user_id;
         // `;
         const users = await SQL`
-      SELECT 
+        SELECT 
         u.user_id,
         u.name,
         u.email,
