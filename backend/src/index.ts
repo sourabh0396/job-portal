@@ -5,6 +5,7 @@ import { SQL } from "./utils/DB.js";
 import { startSendMailConsumer } from "./Kafka/consumer.js";
 import { createClient } from "redis";
 import { error } from "node:console";
+import { initJobPortalDB } from "./module/jobModule.js";
 
 export const redisClient = createClient({
     url: process.env.REDIS_URL,
@@ -60,6 +61,10 @@ async function initDB() {
             PRIMARY KEY (user_id,skill_id)
         )
         `;
+
+
+
+        await initJobPortalDB();    // Calling the new job tables initializer
         console.log('📅 Database table initialize/created sucessfully');
 
     } catch (error) {

@@ -1,9 +1,10 @@
 import express from "express";
 import cloudinary from 'cloudinary';
 import { url } from "node:inspector";
+import uploadFile from "../middleware/multer.js";
 
 const router = express.Router();
-router.post('/upload', async (req, res) => {
+router.post('/upload', uploadFile, async (req, res) => {
     try {
         const { buffer, public_id } = req.body;
 
@@ -14,6 +15,7 @@ router.post('/upload', async (req, res) => {
         res.json({
             url: cloud.secure_url,
             public_id: cloud.public_id
+
         })
 
     } catch (error: any) {
