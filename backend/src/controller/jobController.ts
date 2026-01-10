@@ -7,6 +7,9 @@ import { TryCatch } from "../utils/TryCatch.js";
 import { compare } from "bcrypt";
 import axios from "axios";
 import cloudinary from "../Config/CloudinaryConfig.js";
+import { applicationStatusUpdateTemplate } from "../Config/Kafka/ApplicationUpdationMail.js";
+import { publishTOTopic } from "../Producer.js";
+import { error } from "node:console";
 
 export const createCompany = TryCatch(async (req: AuthenticatedRequest, res) => {
 
@@ -202,5 +205,71 @@ export const getSingleJob = TryCatch(async (req, res) => {
     res.json({ message: "job fetched sucessfully", job })
 });
 
+export const getAllApplicationForJob = TryCatch(async (req: AuthenticatedRequest, res) => {
+    const user = req.user;
+    if (!user) {
+        throw new ErrorHandler(401, 'Authentication required');
+    }
+    if (user.role !== 'recruiter') {
+        throw new ErrorHandler(403, "Forbidden: Only recruiter can create a company");
+    }
+    const { jobId } = req.params;
+    const [job] = await SQL`SELECT posted_by_recruiter_id FROM jobs WHERE job_id =${jobId}`;
 
+    if (!job) {
+        throw new ErrorHandler(401, 'Job Not Found');
+    }
+    if (job.posted_by_recruiter_id !== user.user_id) {
+        throw new ErrorHandler(403, 'Forbidden you are not allowed');
+    }
+    const applications = await SQL` SELECT *
+        FROM applications
+        WHERE job_id = ${jobId}
+        ORDER BY applied_at ASC
+  `;
+    // ORDER BY applied_at DESC,applied_at ASC
+    res.json(applications)
+});
 
+export const updateApplication = TryCatch(async (req: AuthenticatedRequest, res) => {
+    const user = req.user;
+    if (!user) {
+        throw new ErrorHandler(401, 'Authentication required');
+    }
+    if (user.role !== 'recruiter') {
+        throw new ErrorHandler(403, "Forbidden: Only recruiter can create a company");
+    }
+    const { id } = req.params;
+    const [application] = await SQL`
+    SELECT * FROM applications WHERE application_id=${id}
+    `;
+    if (!application) {
+        throw new ErrorHandler(401, 'Application not found');
+    }
+
+    const [job] = await SQL`SELECT posted_by_recruiter_id, title FROM jobs WHERE job_id=${application.job_id}`;
+
+    if (!job) {
+        throw new ErrorHandler(404, 'No jobs with this id');
+    }
+    if (job.posted_by_recruiter_id !== user.user_id) {
+        throw new ErrorHandler(403, 'Forbidden: You are not allowed');
+    }
+    const [updatedApplication] = await SQL`UPDATE applications SET status=${req.body.status}
+    WHERE application_id =${id} RETURNING *`;
+    const message = {
+        to: application.applicant_email,
+        subject: "Application Update- Job Portal",
+        html: applicationStatusUpdateTemplate(job.title)
+    }
+
+    publishTOTopic("send-mail", message).catch((error) => {
+        console.error("Failed to publish message to kafka", error)
+    })
+
+    res.json({
+        message: "Application Updated",
+        job,
+        updatedApplication
+    })
+});
