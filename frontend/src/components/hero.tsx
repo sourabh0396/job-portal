@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "./ui/button";
-import HeroImage from "../../public/happy-latin-businesswoman-standing-with-arms-crossed-against-isolated-background.jpg";
+import HeroImage from "../../public/businesswoman-standing-background.jpg.jpg";
 
 function Hero() {
   return (
