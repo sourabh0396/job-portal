@@ -11,11 +11,14 @@ const ai = new GoogleGenAI({
 router.post('/career', async (req, res) => {
     // let skills: string;
     try {
-        const { skills } = req.body as { skills: string };
-        if (!skills) {
-            return res.status(400).json({
-                message: "Skills Required"
-            });
+        const { skills } = req.body as { skills: string[] };
+        // if (!skills) {
+        //     return res.status(400).json({
+        //         message: "Skills Required"
+        //     });
+        // }
+        if (!Array.isArray(skills) || skills.length === 0) {
+            return res.status(400).json({ message: "Skills Required" });
         }
 
         const prompt = `

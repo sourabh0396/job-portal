@@ -5,7 +5,17 @@ import { connectKafka } from './Producer.js';
 import userRoutes from "./routes/userRotes.js";
 import jobRotes from "./routes/jobRotes.js";
 import genAiRoutes from "./routes/genAiRoutes.js"
+
+import cors from "cors";
 const app = express();
+app.use(
+    cors({
+        origin: ["http://localhost:3000", "http://localhost:5000"],
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        credentials: true,
+    })
+);
+
 app.use(express.json())
 connectKafka();
 // app.use('/', (req, res) => {
