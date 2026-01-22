@@ -117,7 +117,7 @@ function CarrerGuide() {
             </Button>
           </DialogTrigger>
 
-          <DialogContent className="max-w-4xl max-h-[90h] overflow-y-auto">
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
             {!response ? (
               <>
                 <DialogHeader>
@@ -222,7 +222,10 @@ function CarrerGuide() {
                     </h3>
                     <div className="space-y-3">
                       {response.jobOptions.map((job, index) => (
-                        <div className="p-4 rounded-lg border hover:border-blue-500 transition-colors">
+                        <div
+                          key={index}
+                          className="p-4 rounded-lg border hover:border-blue-500 transition-colors"
+                        >
                           {index}
 
                           <h4 className="font-semibold text-base mb-2">
@@ -255,7 +258,7 @@ function CarrerGuide() {
                     </h3>
                     <div className="space-y-4">
                       {response.skillsToLearn.map((category, index) => (
-                        <div className="space-y-2 ">
+                        <div key={index} className="space-y-2 ">
                           <h4
                             key={index}
                             className="text-lg font-semibold text-blue-600"
@@ -290,23 +293,25 @@ function CarrerGuide() {
                   <div className="p-4 rounded-lg border bg-blue-950/20 dark:bg-red-950/20">
                     <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
                       <BookOpen size={20} className="text-blue-600" />
-                      {response.learningApproach.title}
+                      {response?.learningApproach?.title}
                     </h3>
                     <ul className="space-y-2">
-                      {response.learningApproach.points.map((point, index) => (
-                        <li
-                          key={index}
-                          className="text-sm flex items-start gap-2"
-                        >
-                          <span className="text-blue-600 mt-0.5">
-                            <span className="mt-0.5 inline-block h-2 w-2 rounded-full bg-blue-600"></span>
-                          </span>
-                          <span
-                            className="opacity-90"
-                            dangerouslySetInnerHTML={{ __html: point }}
-                          ></span>
-                        </li>
-                      ))}
+                      {response?.learningApproach?.points.map(
+                        (point, index) => (
+                          <li
+                            key={index}
+                            className="text-sm flex items-start gap-2"
+                          >
+                            <span className="text-blue-600 mt-0.5">
+                              <span className="mt-0.5 inline-block h-2 w-2 rounded-full bg-blue-600"></span>
+                            </span>
+                            <span
+                              className="opacity-90"
+                              dangerouslySetInnerHTML={{ __html: point }}
+                            ></span>
+                          </li>
+                        ),
+                      )}
                     </ul>
                   </div>
                   <Button
