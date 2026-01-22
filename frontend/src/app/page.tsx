@@ -1,5 +1,6 @@
 import CarrerGuide from "@/components/carrerguide";
 import Hero from "@/components/hero";
+import ResumeAnalyzer from "@/components/resume-analyser";
 import Image from "next/image";
 
 export default function Home() {
@@ -7,6 +8,7 @@ export default function Home() {
     <div>
       <Hero />
       <CarrerGuide />
+      <ResumeAnalyzer />
     </div>
   );
 }
