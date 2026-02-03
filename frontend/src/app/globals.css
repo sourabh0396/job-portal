@@ -247,3 +247,17 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.icon-style{
+  @apply absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 opacity-50;
+}
+
+.form-field {
+  @apply w-full h-11 pl-10 pr-4 rounded-md
+         border border-gray-300
+         bg-transparent
+         focus:outline-none
+         focus:ring-2 focus:ring-blue-500
+         focus:border-blue-500
+         box-border;
+}

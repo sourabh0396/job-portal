@@ -36,7 +36,7 @@ function Hero() {
             {/* heading */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
               Find Your Dream Job at{" "}
-              <span className="text-red-500">HireHeaven</span>
+              <span className="text-red-500">JobFinder</span>
             </h1>
 
             {/* description */}

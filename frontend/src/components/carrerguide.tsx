@@ -1,5 +1,5 @@
 "use client";
-import { CarrerGuideResponse, SERVICE_LOCAL_HOST } from "@/types";
+import { CarrerGuideResponse } from "@/types";
 import axios from "axios";
 import {
   ArrowRight,
@@ -26,6 +26,7 @@ import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { log } from "console";
+import { SERVICE_LOCAL_HOST } from "@/context/AppContect";
 
 function CarrerGuide() {
   const [open, setOpen] = useState(false);
