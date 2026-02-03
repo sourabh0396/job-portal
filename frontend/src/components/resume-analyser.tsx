@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import axios from "axios";
 import { ResumeAnalysisResponse } from "@/types";
-import { SERVICE_LOCAL_HOST } from "@/types";
+import { SERVICE_LOCAL_HOST } from "@/context/AppContect";
 // import toast from "react-hot-toast";
 const ResumeAnalyzer = () => {
   const [open, setOpen] = useState(false);

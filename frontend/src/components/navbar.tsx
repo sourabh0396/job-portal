@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { Button } from "./ui/button";
 import {
   Briefcase,
@@ -17,15 +17,20 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { ModeToggle } from "./mode.toggle";
+import { useAppData } from "@/context/AppContect";
 
 export const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isAuth, user, setIsAuth, setUser, loading, logOutUser } =
+    useAppData();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen); //oppose to isopen
   };
-  const isAuth = true;
-  const logoutHandler = () => {};
+  // const isAuth = true;
+  const logoutHandler = () => {
+    logOutUser();
+  };
 
   return (
     <>
@@ -66,49 +71,62 @@ export const NavBar = () => {
           </div>
 
           <div className="hidden md:flex items-center gap-3">
-            {isAuth ? (
-              <Popover>
-                <PopoverTrigger asChild>
-                  <button className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                    <Avatar className="h-9 w-9 ring-offset-2 ring-offset-background ring-blue-500/20 cursor-pointer hover:ring-blue-500/40 transition-all">
-                      {/* <AvatarImage src={} alt="" /> */}
-                      <AvatarFallback className="bg-blue-100 dark:bg-blue-900 text-blue-600"></AvatarFallback>
-                    </Avatar>
-                  </button>
-                </PopoverTrigger>
+            {loading ? (
+              ""
+            ) : (
+              <>
+                {isAuth ? (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                        <Avatar className="h-9 w-9 ring-offset-2 ring-offset-background ring-blue-500/20 cursor-pointer hover:ring-blue-500/40 transition-all">
+                          <AvatarImage
+                            src={user ? (user.profile_pic as string) : ""}
+                            alt={user ? user.name : ""}
+                          />
+                          <AvatarFallback className="bg-blue-100 dark:bg-blue-900 text-blue-600">
+                            {user?.name?.charAt(0).toUpperCase() || "U"}
+                          </AvatarFallback>
+                        </Avatar>
+                      </button>
+                    </PopoverTrigger>
 
-                <PopoverContent className="w-56 p-2" align="end">
-                  <div className="px-3 py-2 mb-2 border-b">
-                    <p className="text-sm font-semibold">Sourabh</p>
-                    <p className="text-xs opacity-60 truncate">
-                      sourabhpatil0369@gmail.com
-                    </p>
-                  </div>
+                    <PopoverContent className="w-56 p-2" align="end">
+                      <div className="px-3 py-2 mb-2 border-b">
+                        <p className="text-sm font-semibold">
+                          {user && user.name}
+                        </p>
+                        <p className="text-xs opacity-60 truncate">
+                          {user && user.email}
+                        </p>
+                      </div>
 
-                  <Link href={"/account"}>
-                    <Button
-                      className="w-full justify-start gap-2"
-                      variant={"ghost"}
-                    >
+                      <Link href={"/account"}>
+                        <Button
+                          className="w-full justify-start gap-2"
+                          variant={"ghost"}
+                        >
+                          <User size={16} />
+                          My Profile
+                        </Button>
+                      </Link>
+                      <Button
+                        className="w-full justify-start gap-2 mt-1"
+                        onClick={logoutHandler}
+                      >
+                        <LogOut size={16}>LogOut</LogOut>
+                      </Button>
+                    </PopoverContent>
+                  </Popover>
+                ) : (
+                  <Link href={"/login"}>
+                    <Button variant={"ghost"} className="gap-2">
                       <User size={16} />
-                      My Profile
+                      Sign In
                     </Button>
                   </Link>
-                  <Button
-                    className="w-full justify-start gap-2 mt-1"
-                    onClick={logoutHandler}
-                  >
-                    <LogOut size={16}>LogOut</LogOut>
-                  </Button>
-                </PopoverContent>
-              </Popover>
-            ) : (
-              <Link href={"/login"}>
-                <Button variant={"ghost"} className="gap-2">
-                  <User size={16} />
-                  Sign In
-                </Button>
-              </Link>
+                )}
+              </>
             )}
             <ModeToggle />
           </div>

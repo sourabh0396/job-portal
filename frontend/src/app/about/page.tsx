@@ -14,7 +14,7 @@ const About = () => {
           <div className="flex justify-center mb-8">
             <Image
               src={DeskDesign}
-              alt="About HireHeaven"
+              alt="About HireJobFinder"
               className="w-full max-w-[500] rounded-2xl shadow-lg"
             />
           </div>
@@ -22,7 +22,7 @@ const About = () => {
           <div className="text-center space-y-6">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold">
               Our Mission At Hire
-              <span className="text-red-500">Heaven</span>
+              <span className="text-red-500">JobFinder</span>
             </h1>
             <p className="text-lg md:text-xl leading-relaxed opacity-90 max-w-3xl mx-auto">
               At HireHaven, we're dedicated to revolutionizing the job search
@@ -41,7 +41,7 @@ const About = () => {
               Ready to find your dream job?
             </h2>
             <p className="text-lg md:text-xl opacity-80">
-              Join thousands of successful job seekers on HireHeaven
+              Join thousands of successful job seekers on HireJobFinder
             </p>
             <div className="pt-4">
               <Link href="/jobs">

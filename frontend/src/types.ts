@@ -1,3 +1,5 @@
+import React, { ReactNode } from "react";
+
 export interface JobOptions {
     title: string,
     responsibilities: string,
@@ -18,8 +20,6 @@ export interface LearningApproach {
     title: string,
     points: string[];
 }
-
-export const SERVICE_LOCAL_HOST = "http://localhost:5000"
 
 export interface CarrerGuideResponse {
     summary: string,
@@ -47,4 +47,35 @@ export interface ResumeAnalysisResponse {
     suggestions: Suggestion[];
     strengths: string[];
     summary: string;
+}
+
+export interface User {
+    user_id: number;
+    name: string;
+    email: string;
+    password: string;
+    phone_number: number;
+    role: "jobseeker" | "recruiter";
+    bio: string | null;
+    resume: string | null;
+    resume_public_id: string | null;
+    profile_pic: string | null;
+    profile_pic_public_id: string | null;
+    skills: string[];
+    subscription: string | null;
+}
+
+export interface AppContextType {
+    user: User | null;
+    loading: boolean;
+    btnLoading: boolean;
+    isAuth: boolean;
+    setUser: React.Dispatch<React.SetStateAction<User | null>>;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsAuth: React.Dispatch<React.SetStateAction<boolean>>;
+    logOutUser: () => Promise<void>;
+}
+
+export interface AppProviderProps {
+    children: ReactNode;
 }
