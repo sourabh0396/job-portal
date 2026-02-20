@@ -131,7 +131,8 @@ export const updateResume = TryCatch(async (req: AuthenticatedRequest, res) => {
 
     const uploadResult = await cloudinary.uploader.upload(base64File, {
         resource_type: "raw",
-        folder: "resumes",
+        folder: "resumes", public_id: `resume-${user.user_id}`,
+        format: "pdf",
     });
     // Update DB
     const [updatedUser] = await SQL`
@@ -140,7 +141,7 @@ export const updateResume = TryCatch(async (req: AuthenticatedRequest, res) => {
     `;
 
     res.json({
-        message: "Resume updated",
+        message: "Resume updated sucessfully",
         updatedUser
     })
 });

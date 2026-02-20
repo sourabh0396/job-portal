@@ -37,6 +37,73 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     }
   }
 
+  async function updateProfilePic(formData: any) {
+    setLoading(true);
+    try {
+      const { data } = await axios.put(
+        `${SERVICE_LOCAL_HOST}/api/user/update/pic`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      toast.success(data.message);
+      fetchUser();
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function updateResume(formData: any) {
+    setLoading(true);
+    try {
+      const { data } = await axios.put(
+        `${SERVICE_LOCAL_HOST}/api/user/update/resume`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      toast.success(data.message);
+      fetchUser();
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function updateUserProfile(
+    name: string,
+    phoneNumber: string,
+    bio: string,
+  ) {
+    setBtnLoading(true);
+    try {
+      const { data } = await axios.put(
+        `${SERVICE_LOCAL_HOST}/api/user/update/profile`,
+        { name, phoneNumber, bio },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      toast.success(data.message);
+      fetchUser();
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    } finally {
+      setBtnLoading(false);
+    }
+  }
+
   async function logOutUser() {
     Cookies.set("token", "");
     setUser(null);
@@ -59,9 +126,13 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         setIsAuth,
         setLoading,
         logOutUser,
+        updateProfilePic,
+        updateResume,
+        updateUserProfile,
       }}
     >
       {children}
+      <Toaster />
     </AppContext.Provider>
   );
 };
