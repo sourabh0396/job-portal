@@ -1,0 +1,49 @@
+"use client";
+import { SERVICE_LOCAL_HOST } from "@/context/AppContect";
+import { User } from "@/types";
+import Cookies from "js-cookie";
+import axios from "axios";
+import { log } from "console";
+import { useParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import Loading from "@/components/ui/loading";
+import Info from "../components/info";
+
+const UserAccount = () => {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
+
+  async function fetchUser() {
+    const token = Cookies.get("token");
+    try {
+      const { data } = await axios.get(`${SERVICE_LOCAL_HOST}/api/user/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUser(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchUser();
+  }, [id]);
+
+  if (loading) return <Loading />;
+  return (
+    <>
+      {user && (
+        <div>
+          <Info user={user} isYourAccount={true} />
+        </div>
+      )}
+    </>
+  );
+};
+
+export default UserAccount;
