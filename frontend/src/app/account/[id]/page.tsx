@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Loading from "@/components/ui/loading";
 import Info from "../components/info";
+import Skills from "../components/skills";
 
 const UserAccount = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -39,7 +40,11 @@ const UserAccount = () => {
     <>
       {user && (
         <div>
-          <Info user={user} isYourAccount={true} />
+          <Info user={user} isYourAccount={false} />
+
+          {user.role === "jobseeker" && (
+            <Skills user={user} isYourAccount={false} />
+          )}
         </div>
       )}
     </>

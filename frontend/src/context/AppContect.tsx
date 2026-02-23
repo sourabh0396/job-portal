@@ -111,6 +111,45 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     toast.success("Logged Out Sucessfully");
   }
 
+  async function addSkilltoUser(
+    skill: string,
+    setSkill: React.Dispatch<React.SetStateAction<string>>,
+  ) {
+    setBtnLoading(true);
+    try {
+      const { data } = await axios.post(
+        `${SERVICE_LOCAL_HOST}/api/user/skill/add`,
+        { skillName: skill },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+      toast.success(data.message);
+      setSkill("");
+      fetchUser();
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    } finally {
+      setBtnLoading(false);
+    }
+  }
+
+  async function removeSkillfromUser(skill: string) {
+    try {
+      const { data } = await axios.put(
+        `${SERVICE_LOCAL_HOST}/api/user/skill/delete`,
+        { skillName: skill },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+      toast.success(data.message);
+      fetchUser();
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    }
+  }
+
   useEffect(() => {
     fetchUser();
   }, []);
@@ -129,10 +168,12 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         updateProfilePic,
         updateResume,
         updateUserProfile,
+        addSkilltoUser,
+        removeSkillfromUser,
       }}
     >
       {children}
-      <Toaster />
+      {/* <Toaster /> */}
     </AppContext.Provider>
   );
 };
