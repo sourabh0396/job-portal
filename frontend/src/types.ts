@@ -77,7 +77,8 @@ export interface AppContextType {
     updateProfilePic: (formData: any) => Promise<void>;
     updateResume: (formData: any) => Promise<void>;
     updateUserProfile: (name: string, phoneNumber: string, bio: string,) => Promise<void>;
-
+    addSkilltoUser: (skill: string, setSkill: React.Dispatch<React.SetStateAction<string>>) => Promise<void>
+    removeSkillfromUser: (skill: string) => Promise<void>;
 
 }
 

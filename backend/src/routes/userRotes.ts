@@ -10,7 +10,7 @@ router.put('/update/profile', isUserAuth, updatedUserProfile);
 router.put('/update/pic', isUserAuth, uploadFile, updateProfilePic);
 router.put('/update/resume', isUserAuth, uploadFile, updateResume);
 router.post('/skill/add', isUserAuth, addSkilltoUser);
-router.delete('/skill/delete', isUserAuth, deleteSkillFromUser);
+router.put('/skill/delete', isUserAuth, deleteSkillFromUser);
 router.post('/apply/job', isUserAuth, applyToJob);
 router.get('/applications/all', isUserAuth, getAllApplications);
 export default router;
