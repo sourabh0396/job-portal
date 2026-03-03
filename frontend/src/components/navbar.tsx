@@ -79,15 +79,23 @@ export const NavBar = () => {
                   <Popover>
                     <PopoverTrigger asChild>
                       <button className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                        <Avatar className="h-9 w-9 ring-offset-2 ring-offset-background ring-blue-500/20 cursor-pointer hover:ring-blue-500/40 transition-all">
-                          <AvatarImage
-                            src={user ? (user.profile_pic as string) : ""}
-                            alt={user ? user.name : ""}
-                          />
-                          <AvatarFallback className="bg-blue-100 dark:bg-blue-900 text-blue-600">
-                            {user?.name?.charAt(0).toUpperCase() || "U"}
-                          </AvatarFallback>
-                        </Avatar>
+                        <div className="relative w-12 h-12">
+                          {/* Moving Gradient Ring */}
+                          <div className="absolute inset-0 rounded-full p-[3px] bg-gradient-to-tr from-blue-500 via-purple-500 to-pink-500 animate-spin">
+                            <div className="w-full h-full rounded-full bg-background" />
+                          </div>
+
+                          {/* Avatar */}
+                          <Avatar className="absolute inset-[4px] h-auto w-auto rounded-full">
+                            <AvatarImage
+                              src={user ? (user.profile_pic as string) : ""}
+                              alt={user ? user.name : ""}
+                            />
+                            <AvatarFallback className="bg-blue-100 dark:bg-blue-900 text-blue-600 text-lg">
+                              {user?.name?.charAt(0).toUpperCase() || "U"}
+                            </AvatarFallback>
+                          </Avatar>
+                        </div>
                       </button>
                     </PopoverTrigger>
 

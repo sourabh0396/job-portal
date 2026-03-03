@@ -10,7 +10,7 @@ router.post('/new', isUserAuth, createJob);
 
 router.put('/update/:jobId', isUserAuth, updateJob);
 router.get('/company/all', isUserAuth, getAllCompany);
-router.get('/company/:id', isUserAuth, getCompanyDetails);
+router.get('/company/:id', getCompanyDetails);
 router.get('/all', isUserAuth, getAllActiveJobs);
 router.get('/:jobId', isUserAuth, getSingleJob);
 router.get('/application/all/:jobId', isUserAuth, getAllApplicationForJob);
