@@ -67,44 +67,47 @@ function LoginPage() {
               className="space-y-5"
             >
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium">
-                  Email Address
-                  <div className="relative">
-                    <Mail className="icon-style" />
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="you@email.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="pl-10 h-11"
-                    />
-                  </div>
-                </Label>
+                <Label htmlFor="email">Email Address</Label>
+                <div className="relative">
+                  <Mail
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={18}
+                  />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="you@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="pl-10 h-11"
+                  />
+                </div>
               </div>
 
+              {/* Password */}
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-sm font-medium">
-                  Password
-                  <div className="relative">
-                    <Lock className="icon-style" />
-                    <Input
-                      id="password"
-                      type="password"
-                      placeholder="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      className="pl-10 h-11"
-                    />
-                  </div>
-                </Label>
+                <Label htmlFor="password">Password</Label>
+                <div className="relative">
+                  <Lock
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={18}
+                  />
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="pl-10 h-11"
+                  />
+                </div>
               </div>
 
               <div className="flex items-center justify-end">
                 <Link
-                  href={"/forget"}
+                  href={"/forgot"}
                   className="text-sm text-blue-500 hover:underline transition-all"
                 >
                   Forget Password?

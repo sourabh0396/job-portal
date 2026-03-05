@@ -93,8 +93,8 @@ const Info: React.FC<AccountProps> = ({ user, isYourAccount }) => {
         {/* Avatar */}
         <div className="relative px-8">
           <div className="absolute -top-16">
-            <div className="relative w-30 h-30">
-              <div className="rounded-full border-4 border-white overflow-hidden shadow-xl bg-white">
+            <div className="relative w-32 h-32">
+              <div className="w-full h-full rounded-full border-4 border-white overflow-hidden shadow-xl bg-white">
                 <Image
                   src={user.profile_pic ? user.profile_pic : avatarImage}
                   alt="Profile picture"
