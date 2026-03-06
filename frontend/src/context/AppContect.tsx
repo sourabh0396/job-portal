@@ -1,6 +1,6 @@
 "use client";
 
-import { AppProviderProps, User } from "@/types";
+import { Application, AppProviderProps, User } from "@/types";
 import { AppContextType } from "@/types";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
@@ -19,6 +19,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [btnLoading, setBtnLoading] = useState(false);
 
   const token = Cookies.get("token");
+
+  const [applications, setApplications] = useState<Application[] | null>(null);
 
   async function fetchUser() {
     try {
@@ -150,8 +152,55 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     }
   }
 
+  async function applyToJob(job_id: number) {
+    setBtnLoading(true);
+
+    if (!token) {
+      toast.error("Please login first");
+      return;
+    }
+    try {
+      const { data } = await axios.post(
+        `${SERVICE_LOCAL_HOST}/api/user/apply/job`,
+        { job_id },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      toast.success(data.message);
+      fetchApplications();
+    } catch (error: any) {
+      // toast.error(error.response.data.message);
+      console.log(error);
+      toast.error(error?.response?.data?.message || "Something went wrong");
+    } finally {
+      setBtnLoading(false);
+    }
+  }
+
+  async function fetchApplications() {
+    try {
+      const token = Cookies.get("token");
+      const { data } = await axios.get(
+        `${SERVICE_LOCAL_HOST}/api/user/applications/all`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      // setApplications(data);
+      setApplications(data.applications);
+    } catch (error: any) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     fetchUser();
+    fetchApplications();
   }, []);
 
   return (
@@ -170,6 +219,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         updateUserProfile,
         addSkilltoUser,
         removeSkillfromUser,
+        applyToJob,
+        applications,
+        fetchApplications,
       }}
     >
       {children}

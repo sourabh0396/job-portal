@@ -79,6 +79,9 @@ export interface AppContextType {
     updateUserProfile: (name: string, phoneNumber: string, bio: string,) => Promise<void>;
     addSkilltoUser: (skill: string, setSkill: React.Dispatch<React.SetStateAction<string>>) => Promise<void>
     removeSkillfromUser: (skill: string) => Promise<void>;
+    applyToJob: (job_id: number) => Promise<void>;
+    applications: Application[] | null;
+    fetchApplications: () => Promise<void>
 
 }
 
@@ -106,6 +109,8 @@ export interface Job {
     role: string;
     work_location: "On-site" | "Remote" | "Hybrid";
     company_id: number;
+    company_name: string;
+    company_logo: string;
     posted_by_recruiter_id: number;
     created_at: string;
     is_active?: boolean;
