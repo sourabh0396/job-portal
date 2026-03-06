@@ -231,8 +231,8 @@ export const applyToJob = TryCatch(async (req: AuthenticatedRequest, res) => {
     }
     let newApplication;
     try {
-        [newApplication] = await SQL`INSERT INTO applications(job_id, applicant_id, applicant_email, resume, subscribed)
-        VALUES (${job_id},${applicant_id},${user?.email},${resume}
+        [newApplication] = await SQL`INSERT INTO applications(job_id, applicant_id, applicant_email, resume)
+            VALUES (${job_id}, ${applicant_id}, ${user.email}, ${resume}
         )`
     } catch (error: any) {
         // 23505 is a PostgreSQL error code
