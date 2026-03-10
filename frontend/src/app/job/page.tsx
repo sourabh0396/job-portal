@@ -30,11 +30,12 @@ const JobPage = () => {
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
 
-  const token = Cookies.get("token");
+  // const token = Cookies.get("token");
   const ref = useRef<HTMLButtonElement>(null);
   const fetchJobs = async () => {
     setLoading(true);
     try {
+      const token = Cookies.get("token");
       const { data } = await axios.get(
         `${SERVICE_LOCAL_HOST}/api/job/all?title=${title}&location=${location}`,
         {

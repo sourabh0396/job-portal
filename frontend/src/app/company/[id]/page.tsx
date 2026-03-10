@@ -537,7 +537,7 @@ const CompanyPage = () => {
                               </div>
                             </div>
                             <div className="flex items-center gap-2">
-                              <Link href={`/jobs/${j.job_id}`}>
+                              <Link href={`/job/${j.job_id}`}>
                                 <Button
                                   variant="outline"
                                   size="sm"
