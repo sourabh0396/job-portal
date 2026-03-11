@@ -20,7 +20,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const token = Cookies.get("token");
 
-  const [applications, setApplications] = useState<Application[] | null>(null);
+  const [applications, setApplications] = useState<Application[]>([]);
 
   async function fetchUser() {
     try {
